@@ -33,10 +33,19 @@ class App extends Component {
   }
 
   render() {
+
+    let styles = {
+      width:"100px",
+      height: "40px",
+      background: "grey",
+      color: "white",
+      cursor: "pointer"
+
+    }
     return (
       <div className="App">
         <h1>Hi world!</h1>
-        <button onClick={this.switchName.bind(this, "Afonya")}>Click me</button>
+        <button style={styles} onClick={this.switchName.bind(this, "Afonya")}>Click me</button>
         <Person 
         name={this.state.people[0].name}
         click={this.switchName.bind(this, "Afonya")}
