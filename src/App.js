@@ -12,17 +12,39 @@ class App extends Component {
     ]
   }
 
-  switchName = () => {
-    console.log(this.state.people);
+  switchName = (otherName) => {
+    this.setState({
+      people: [
+        {name:otherName},
+        {name:"Petr"},
+        {name:"Dorrel"}
+      ]
+    });
+  }
+
+  changeName = (event) => {
+    this.setState({
+      people: [
+        {name: "Kiryl"},
+        {name:event.target.value},
+        {name:"Dorrel"}
+      ]
+    });
   }
 
   render() {
     return (
       <div className="App">
         <h1>Hi world!</h1>
-        <button onClick={this.switchName}>Click me</button>
-        <Person name={this.state.people[0].name}/>
-        <Person name={this.state.people[1].name}>I like this world!</Person>
+        <button onClick={this.switchName.bind(this, "Afonya")}>Click me</button>
+        <Person 
+        name={this.state.people[0].name}
+        click={this.switchName.bind(this, "Afonya")}
+        />
+        <Person 
+        name={this.state.people[1].name}
+        change={this.changeName}
+        >I like this world!</Person>
         <Person name={this.state.people[2].name}/>
       </div>
     ); 
