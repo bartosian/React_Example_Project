@@ -9,7 +9,8 @@ class App extends Component {
       {name:"Kiryl"},
       {name:"Petr"},
       {name:"Alex"}
-    ]
+    ],
+    showPeople: false
   }
 
   switchName = (otherName) => {
@@ -32,6 +33,13 @@ class App extends Component {
     });
   }
 
+  showPeople = () => {
+    let show = !this.state.showPeople;
+    this.setState({
+      showPeople: show
+    });
+  }
+
   render() {
 
     let styles = {
@@ -42,19 +50,26 @@ class App extends Component {
       cursor: "pointer"
 
     }
+
+    let people = null;
+
+    if(this.state.showPeople) {
+        people = (
+          <div>
+          { this.state.people.map(
+            (person) => {
+              return <Person name={person.name}/>
+            }
+          )}
+          </div>
+        );
+    }
+
     return (
       <div className="App">
         <h1>Hi world!</h1>
-        <button style={styles} onClick={this.switchName.bind(this, "Afonya")}>Click me</button>
-        <Person 
-        name={this.state.people[0].name}
-        click={this.switchName.bind(this, "Afonya")}
-        />
-        <Person 
-        name={this.state.people[1].name}
-        change={this.changeName}
-        >I like this world!</Person>
-        <Person name={this.state.people[2].name}/>
+        <button style={styles} onClick={this.showPeople}>Click me</button>
+          {people}
       </div>
     ); 
 
