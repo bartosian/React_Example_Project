@@ -6,30 +6,35 @@ class App extends Component {
 
   state = {
     people: [
-      {name:"Kiryl"},
-      {name:"Petr"},
-      {name:"Alex"}
+      {id:"0", name:"Kiryl"},
+      {id:"1", name:"Petr"},
+      {id:"2", name:"Alex"}
     ],
     showPeople: false
   }
 
-  switchName = (otherName) => {
-    this.setState({
-      people: [
-        {name:otherName},
-        {name:"Petr"},
-        {name:"Dorrel"}
-      ]
-    });
+  deletePerson = (idx) => {
+      const people = [...this.state.people];
+      people.splice(idx, 1);
+
+      this.setState({
+        people: people
+      });
   }
 
-  changeName = (event) => {
+  changeName = (event, id) => {
+    let personIdx = this.state.people.findIndex((person) => {
+      return person.id === id;
+    });
+
+    let person = Object.assign({}, this.state.people[personIdx]);
+    person.name = event.target.value;
+
+    let people = [...this.state.people];
+    people[personIdx] = person;
+    
     this.setState({
-      people: [
-        {name: "Kiryl"},
-        {name:event.target.value},
-        {name:"Dorrel"}
-      ]
+      people: people
     });
   }
 
@@ -57,8 +62,13 @@ class App extends Component {
         people = (
           <div>
           { this.state.people.map(
-            (person) => {
-              return <Person name={person.name}/>
+            (person, idx) => {
+              return <Person 
+              key={person.id}
+              name={person.name}
+              delete={() => {this.deletePerson(idx)}}
+              change={ (event) => { this.changeName(event, person.id)}}
+              />
             }
           )}
           </div>
